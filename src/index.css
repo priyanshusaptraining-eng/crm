@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+:root {
+  /* CorporateAcademy CRM — Bento Grid Enterprise Palette */
+  --bg: #0B1020;
+  --sidebar-bg: #111827;
+  --card-bg: #151F35;
+  --secondary-card-bg: #1B2942;
+  --elevated-bg: #1E2D4A;
+  --input-bg: #0C1425;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border: #23324E;
+  --border-subtle: #1A253D;
+  --accent: #F59E0B;
+  --accent-hover: #FBBF24;
+  --accent-soft: rgba(245, 158, 11, 0.15);
+  --accent-text: #000000;
+  --success: #22C55E;
+  --success-soft: rgba(34, 197, 94, 0.15);
+  --warning: #FBBF24;
+  --warning-soft: rgba(251, 191, 36, 0.15);
+  --error: #EF4444;
+  --error-soft: rgba(239, 68, 68, 0.15);
+}
+
+/* Theme: Corporate Bento Default */
+[data-theme="corporate-bento"], .theme-corporate-bento {
+  --bg: #0B1020;
+  --sidebar-bg: #111827;
+  --card-bg: #151F35;
+  --secondary-card-bg: #1B2942;
+  --elevated-bg: #1E2D4A;
+  --input-bg: #0C1425;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border: #23324E;
+  --border-subtle: #1A253D;
+  --accent: #F59E0B;
+  --accent-hover: #FBBF24;
+  --accent-soft: rgba(245, 158, 11, 0.15);
+  --accent-text: #000000;
+  --success: #22C55E;
+  --success-soft: rgba(34, 197, 94, 0.15);
+  --warning: #FBBF24;
+  --warning-soft: rgba(251, 191, 36, 0.15);
+  --error: #EF4444;
+  --error-soft: rgba(239, 68, 68, 0.15);
+}
+
+/* Theme 2: Charcoal Amber */
+[data-theme="charcoal-amber"], .theme-charcoal-amber {
+  --bg: #121316;
+  --sidebar-bg: #0E0F12;
+  --card-bg: #1A1C22;
+  --elevated-bg: #22252C;
+  --input-bg: #14161B;
+  --text-primary: #FFFFFF;
+  --text-secondary: #D1D5DB;
+  --text-muted: #9CA3AF;
+  --border: #2A2D36;
+  --border-subtle: #202229;
+  --accent: #F59E0B;
+  --accent-hover: #FBBF24;
+  --accent-soft: rgba(245, 158, 11, 0.16);
+  --accent-text: #000000;
+  --success: #10B981;
+  --success-soft: rgba(16, 185, 129, 0.15);
+  --warning: #FB923C;
+  --warning-soft: rgba(251, 146, 60, 0.15);
+  --error: #EF4444;
+  --error-soft: rgba(239, 68, 68, 0.15);
+}
+
+/* Theme 3: Slate Executive */
+[data-theme="slate-executive"], .theme-slate-executive {
+  --bg: #0F172A;
+  --sidebar-bg: #0B1120;
+  --card-bg: #1E293B;
+  --elevated-bg: #283548;
+  --input-bg: #131E31;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --border: #334155;
+  --border-subtle: #232E40;
+  --accent: #38BDF8;
+  --accent-hover: #60A5FA;
+  --accent-soft: rgba(56, 189, 248, 0.14);
+  --accent-text: #0F172A;
+  --success: #34D399;
+  --success-soft: rgba(52, 211, 153, 0.15);
+  --warning: #FBBF24;
+  --warning-soft: rgba(251, 191, 36, 0.15);
+  --error: #F87171;
+  --error-soft: rgba(248, 113, 113, 0.15);
+}
+
+/* Theme 4: Obsidian */
+[data-theme="obsidian"], .theme-obsidian {
+  --bg: #09090B;
+  --sidebar-bg: #050507;
+  --card-bg: #141417;
+  --elevated-bg: #1C1C21;
+  --input-bg: #0F0F12;
+  --text-primary: #FAFAFA;
+  --text-secondary: #D4D4D8;
+  --text-muted: #A1A1AA;
+  --border: #27272A;
+  --border-subtle: #1C1C1F;
+  --accent: #10B981;
+  --accent-hover: #34D399;
+  --accent-soft: rgba(16, 185, 129, 0.15);
+  --accent-text: #000000;
+  --success: #22C55E;
+  --success-soft: rgba(34, 197, 94, 0.15);
+  --warning: #EAB308;
+  --warning-soft: rgba(234, 179, 8, 0.15);
+  --error: #F43F5E;
+  --error-soft: rgba(244, 63, 94, 0.15);
+}
+
+/* Theme 5: Clean Light */
+[data-theme="clean-light"], .theme-clean-light {
+  --bg: #F8FAFC;
+  --sidebar-bg: #FFFFFF;
+  --card-bg: #FFFFFF;
+  --elevated-bg: #F1F5F9;
+  --input-bg: #F8FAFC;
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --text-muted: #64748B;
+  --border: #E2E8F0;
+  --border-subtle: #EDF2F7;
+  --accent: #4F46E5;
+  --accent-hover: #6366F1;
+  --accent-soft: #EEF2FF;
+  --accent-text: #FFFFFF;
+  --success: #059669;
+  --success-soft: #D1FAE5;
+  --warning: #D97706;
+  --warning-soft: #FEF3C7;
+  --error: #DC2626;
+  --error-soft: #FEE2E2;
+}
+
+/* Universal Typography Rule: Inter only */
+@layer base {
+  html, body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    background-color: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6, button, input, select, textarea {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  }
+
+  .tabular-nums, .font-num {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Centralized Component Utilities */
+.crm-surface {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.crm-elevated {
+  background-color: var(--elevated-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.crm-input {
+  background-color: var(--input-bg);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 8px;
+}
+.crm-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+/* Smooth customized scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Ensure all select inputs and option popups have proper dark-mode theme colors and contrast */
+select {
+  color-scheme: dark;
+}
+
+select option {
+  background-color: #141E35 !important;
+  color: #F8FAFC !important;
+}
+
+select option:checked {
+  background-color: var(--accent, #819BFF) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="clean-light"] select, .theme-clean-light select {
+  color-scheme: light;
+}
+
+[data-theme="clean-light"] select option, .theme-clean-light select option {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+[data-theme="clean-light"] select option:checked, .theme-clean-light select option:checked {
+  background-color: #4F46E5 !important;
+  color: #FFFFFF !important;
+}
+

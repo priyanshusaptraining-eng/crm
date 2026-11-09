@@ -1,0 +1,6 @@
+{
+  "name": "CRM Application Specification Generator & Interactive Preview",
+  "description": "Comprehensive specification generator and live interactive preview for a role-based sales CRM with lead management, demo scheduling, revenue tracking, and target metrics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

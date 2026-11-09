@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B1020" />
+      <stop offset="100%" stop-color="#151F35" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+  <!-- Background with subtle rounded border -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  <rect x="12" y="12" width="488" height="488" rx="100" fill="none" stroke="#1E2D4A" stroke-width="8" opacity="0.6" />
+  
+  <!-- Bento grid glow -->
+  <circle cx="256" cy="220" r="140" fill="#F59E0B" opacity="0.12" filter="blur(30px)" />
+  
+  <!-- Graduation / Corporate Academy Shield Emblem -->
+  <g transform="translate(136, 120)">
+    <!-- Shield Outline -->
+    <path d="M120 10 L220 50 V150 C220 220 120 270 120 270 C120 270 20 220 20 150 V50 Z" 
+          fill="#111827" stroke="url(#goldGrad)" stroke-width="12" stroke-linejoin="round" />
+    
+    <!-- Academic Cap / Falcon Crown -->
+    <path d="M120 60 L190 95 L120 130 L50 95 Z" fill="url(#goldGrad)" />
+    <path d="M165 110 V145 C165 145 150 160 120 160 C90 160 75 145 75 145 V110" 
+          fill="none" stroke="url(#goldGrad)" stroke-width="8" stroke-linecap="round" />
+    <!-- Tassel -->
+    <path d="M185 100 V150" stroke="#FBBF24" stroke-width="5" stroke-linecap="round" />
+    <circle cx="185" cy="155" r="5" fill="#FBBF24" />
+    
+    <!-- Check / Deal Spark -->
+    <circle cx="120" cy="200" r="16" fill="url(#goldGrad)" />
+  </g>
+  
+  <!-- Typography Badge -->
+  <text x="256" y="445" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+        font-size="34" font-weight="800" fill="#F8FAFC" text-anchor="middle" letter-spacing="4">
+    CORPORATE<tspan fill="#F59E0B">ACADEMY</tspan>
+  </text>
+  <text x="256" y="475" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+        font-size="16" font-weight="600" fill="#94A3B8" text-anchor="middle" letter-spacing="6">
+    SALES CRM &amp; DPR
+  </text>
+</svg>

@@ -1,0 +1,304 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Lead Desk CRM Preview</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Onest:wght@400;500;600&family=Fraunces:wght@700;900&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: login stage, then a sidebar shell with Dashboard, Leads, Demos, Team. Blue ink on cool paper, amber for pending, green for done. */
+:root{--bg:#EEF2F7;--panel:#FFFFFF;--ink:#0F1B3D;--mute:#5B6786;--line:#DCE3EE;--acc:#1D45C9;--acc-ink:#FFFFFF;--acc-soft:#E4EBFC;--ok:#0E7C4A;--ok-soft:#DDF3E8;--warn:#9A5B00;--warn-soft:#FDEFD2;--bad:#B3261E;--bad-soft:#FBE3E1;--display:"Bricolage Grotesque","Trebuchet MS",sans-serif;--body:"Onest","Segoe UI",system-ui,sans-serif;--r:14px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1226;--panel:#131C36;--ink:#E8EDFB;--mute:#9AA6C6;--line:#25314F;--acc:#7B9BFF;--acc-ink:#0B1226;--acc-soft:#1B2850;--ok:#5FD39A;--ok-soft:#12382A;--warn:#F2B955;--warn-soft:#3A2C0F;--bad:#FF8A80;--bad-soft:#40181A;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0B1226;--panel:#131C36;--ink:#E8EDFB;--mute:#9AA6C6;--line:#25314F;--acc:#7B9BFF;--acc-ink:#0B1226;--acc-soft:#1B2850;--ok:#5FD39A;--ok-soft:#12382A;--warn:#F2B955;--warn-soft:#3A2C0F;--bad:#FF8A80;--bad-soft:#40181A;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.01em;text-wrap:balance}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.hide{display:none!important}
+.btn{background:var(--acc);color:var(--acc-ink);border:0;border-radius:10px;padding:10px 16px;font-weight:600;transition:transform .15s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px -8px var(--acc)}.btn:active{transform:translateY(0) scale(.98)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}.btn.ghost:hover{border-color:var(--acc);box-shadow:none}
+.btn.sm{padding:6px 12px;font-size:13px;border-radius:8px}.btn[disabled]{opacity:.45;pointer-events:none}
+input,select{background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 4px var(--acc-soft)}
+label{display:block;font-size:13px;font-weight:600;color:var(--mute);margin:12px 0 5px}
+.note{font-size:12.5px;color:var(--mute)}
+/* login */
+#login{min-height:calc(100vh - 32px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:center;max-width:1040px;margin:0 auto}
+.hero{padding:8px}.hero h1{font-size:clamp(34px,5vw,56px);line-height:1.02;font-weight:800}
+.hero p{color:var(--mute);max-width:34ch;margin:14px 0 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.chip{background:var(--acc-soft);color:var(--acc);border-radius:99px;padding:5px 12px;font-size:13px;font-weight:600;animation:rise .6s both}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.loginbox{animation:rise .6s .1s both}
+/* shell */
+#app{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px}
+nav{position:sticky;top:16px;align-self:start;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:4px}
+nav .brand{font:800 19px var(--display);padding:6px 10px 12px}
+nav button{text-align:left;background:transparent;border:0;border-radius:10px;padding:10px 12px;font-weight:600;color:var(--mute);transition:background .2s,color .2s,transform .15s}
+nav button:hover{background:var(--acc-soft);color:var(--acc);transform:translateX(3px)}nav button.on{background:var(--acc);color:var(--acc-ink)}
+.top{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}
+.top h2{font-size:26px}.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.tools select{width:auto}
+.bell{position:relative}.bell .dot{position:absolute;top:-6px;right:-6px;background:var(--bad);color:#fff;border-radius:99px;font-size:11px;min-width:18px;height:18px;display:grid;place-items:center;font-weight:700}
+.bell.ring{animation:shake .6s}
+.pop{position:absolute;right:0;top:44px;width:min(320px,86vw);background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:10px;z-index:30;box-shadow:0 20px 40px -20px rgba(10,20,60,.4);animation:rise .25s both}
+.pop .item{padding:9px 10px;border-radius:10px;font-size:14px}.pop .item+.item{border-top:1px solid var(--line)}
+.view{animation:rise .45s both}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px;animation:rise .5s both;animation-delay:calc(var(--i)*70ms);transition:transform .2s,border-color .2s}
+.tile:hover{transform:translateY(-3px);border-color:var(--acc)}
+.tile b{display:block;font:800 30px var(--display);line-height:1.1}.tile span{font-size:13px;color:var(--mute)}
+.rings{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:14px}
+.ringcard{display:flex;gap:14px;align-items:center;animation:rise .5s both;animation-delay:calc(var(--i)*90ms)}
+.ring{position:relative;width:92px;height:92px;flex:none}.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:9}.ring .bg{stroke:var(--line)}.ring .fg{stroke:var(--acc);stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)}
+.ring .pct{position:absolute;inset:0;display:grid;place-items:center;font:800 20px var(--display)}
+.ringcard h3{font-size:15px;color:var(--mute);font-family:var(--body);font-weight:600}.ringcard .big{font:800 24px var(--display)}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th{font-size:12.5px;color:var(--mute);text-align:left;padding:8px 10px;border-bottom:1.5px solid var(--line);font-weight:600}
+td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr{animation:rise .4s both;animation-delay:calc(var(--i)*45ms);transition:background .2s}tbody tr:hover{background:var(--acc-soft)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;border-radius:99px;padding:3px 10px;font-size:12.5px;font-weight:600}
+.p-new{background:var(--acc-soft);color:var(--acc)}.p-pend{background:var(--warn-soft);color:var(--warn)}.p-sched{background:var(--acc-soft);color:var(--acc)}.p-ok{background:var(--ok-soft);color:var(--ok)}.p-bad{background:var(--bad-soft);color:var(--bad)}.p-none{background:var(--line);color:var(--mute)}
+.demo{display:grid;gap:10px;margin-bottom:12px;animation:rise .45s both;animation-delay:calc(var(--i)*80ms)}
+.demo header{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.msg{background:var(--bg);border:1.5px dashed var(--line);border-radius:10px;padding:10px 12px;font-size:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row>*{flex:0 0 auto}.row input,.row select{width:auto;min-width:130px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.tog{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.sw{appearance:none;width:44px;height:26px;border-radius:99px;background:var(--line);position:relative;cursor:pointer;padding:0;border:0;transition:background .25s;flex:none}
+.sw:after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .25s}
+.sw:checked{background:var(--acc)}.sw:checked:after{transform:translateX(18px)}
+.modal{position:fixed;inset:0;background:rgba(8,14,40,.55);display:grid;place-items:center;z-index:50;padding:16px;animation:fade .25s both}
+.modal .card{width:min(440px,100%);animation:pop .3s cubic-bezier(.2,.9,.3,1.2) both}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:600;z-index:60;animation:rise .3s both}
+.banner{background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:8px 12px;font-size:13px;margin-bottom:12px}
+.picker{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.picker button{background:var(--panel);border:1.5px solid var(--line);border-radius:99px;padding:6px 14px;font-weight:600;font-size:13px;transition:transform .2s,border-color .2s,background .2s}
+.picker button:hover{border-color:var(--acc);transform:translateY(-2px)}
+.picker button.on{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.dash{background:var(--bg);color:var(--ink);border-radius:18px;padding:14px;transition:background .4s,color .4s}
+.track{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:12px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px;animation:rise .5s both;animation-delay:calc(var(--i)*80ms);transition:transform .2s,box-shadow .2s}
+.box:hover{transform:translateY(-3px)}
+.box h4{margin:0 0 6px;font:600 13px var(--body);color:var(--mute)}
+.box .big{font:800 30px/1.1 var(--display)}.box .big small{font-size:16px;color:var(--mute);font-weight:600}
+.box .sub{font-size:13px;color:var(--mute);margin-top:8px}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:5px;margin-top:10px}
+.day{border-radius:8px;text-align:center;font-size:11px;background:var(--line);color:var(--mute);min-height:40px;display:flex;flex-direction:column;justify-content:center;animation:pop .4s both;animation-delay:calc(var(--i)*18ms)}
+.day b{font-size:10px;font-weight:500}.day span{font-weight:700;font-size:13px}
+.day.hit{background:var(--ok-soft);color:var(--ok);border:1.5px solid var(--ok)}
+.day.gap{background:var(--bad-soft);color:var(--bad)}.day.fut{opacity:.35}.day.now{outline:2.5px solid var(--acc);outline-offset:1px}
+.mbar{display:none}.d3 .mbar,.d4 .mbar{display:block}.d3 .ring,.d4 .ring{display:none}
+.ringcard .txt{flex:1;min-width:0}
+.d2{--bg:#070D1C;--panel:#0F1930;--ink:#E6FFF6;--mute:#8AA3C4;--line:#1D2C4D;--acc:#2EF2B0;--acc-ink:#04170F;--acc-soft:#0F2C3A;--ok:#2EF2B0;--ok-soft:#0F3A2C;--warn:#FFC14D;--warn-soft:#3A2C0F;--bad:#FF7A7A;--bad-soft:#40181A;--display:"Space Grotesk","Trebuchet MS",sans-serif;color-scheme:dark}
+.d2 .card,.d2 .tile,.d2 .box{box-shadow:0 0 0 1px #1D2C4D,0 14px 30px -20px #2EF2B0}
+.d2 .bar i,.d2 .ring .fg{filter:drop-shadow(0 0 6px #2EF2B0)}
+.d3{--bg:#F6EFE3;--panel:#FFFBF3;--ink:#3A2418;--mute:#7A6455;--line:#E6D8C3;--acc:#B8461F;--acc-ink:#FFFFFF;--acc-soft:#F6DFD2;--ok:#3E7D3A;--ok-soft:#E2EEDA;--warn:#A06A12;--warn-soft:#F6E7C3;--bad:#A52A2A;--bad-soft:#F4D9D6;--display:"Fraunces",Georgia,serif;--r:6px;color-scheme:light}
+.d3 .card,.d3 .tile,.d3 .box{border-style:dashed;border-width:1.5px}
+.d4{--bg:#FFE94A;--panel:#FFFFFF;--ink:#0A0A0A;--mute:#333333;--line:#0A0A0A;--acc:#0A0A0A;--acc-ink:#FFE94A;--acc-soft:#FFF3A0;--ok:#0B7A3B;--ok-soft:#C9F5D9;--warn:#8A4B00;--warn-soft:#FFD27A;--bad:#B00020;--bad-soft:#FFC9CF;--display:"Space Grotesk","Arial Black",sans-serif;--r:6px;color-scheme:light}
+.d4 .card,.d4 .tile,.d4 .box{border:2.5px solid #0A0A0A;box-shadow:5px 5px 0 #0A0A0A}
+.d4 .tile:hover,.d4 .box:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 #0A0A0A}
+.d4 .bar{border:2px solid #0A0A0A;height:16px;background:#fff}.d4 .bar i{background:#0A0A0A}
+.d4 .day{border:2px solid #0A0A0A;background:#fff;color:#0A0A0A}.d4 .day.hit{background:#C9F5D9}.d4 .day.gap{background:#FFC9CF}
+.d4 .pill{border:1.5px solid #0A0A0A}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-14deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(6deg)}}
+@media (max-width:820px){#login{grid-template-columns:1fr}#app{grid-template-columns:1fr}nav{position:static;flex-direction:row;overflow-x:auto}nav .brand{display:none}nav button{white-space:nowrap}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important}}
+</style>
+
+<section id="login">
+  <div class="hero">
+    <h1>Every lead, call and demo in one desk.</h1>
+    <p>Preview of the CRM. Sample data only, nothing here is saved.</p>
+    <div class="chips"><span class="chip" style="animation-delay:.2s">Role based access</span><span class="chip" style="animation-delay:.3s">Demo scheduling</span><span class="chip" style="animation-delay:.4s">Revenue per lead</span><span class="chip" style="animation-delay:.5s">Target tracking</span></div>
+  </div>
+  <form class="card loginbox" id="loginForm">
+    <h2 style="font-size:24px">Sign in</h2>
+    <label for="uid">User ID</label><input id="uid" value="admin" autocomplete="off">
+    <label for="pw">Password</label><input id="pw" type="password" value="preview" autocomplete="off">
+    <button class="btn" style="width:100%;margin-top:16px">Sign in as super admin</button>
+    <p class="note" style="margin-top:10px">The super admin can change this user ID later from the Team page. This is a preview, so any password works.</p>
+  </form>
+</section>
+
+<div id="app" class="hide">
+  <nav id="nav"><div class="brand">Lead Desk</div></nav>
+  <main>
+    <div class="top"><h2 id="title"></h2>
+      <div class="tools">
+        <label for="role" class="note" style="margin:0">Preview as</label>
+        <select id="role"></select>
+        <span class="bell" id="bellWrap"><button class="btn ghost sm" id="bell" aria-label="Notifications">Notifications <span class="dot hide" id="dot">0</span></button><div class="pop hide" id="pop"></div></span>
+      </div>
+    </div>
+    <div id="view"></div>
+  </main>
+</div>
+<div id="modalHost"></div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const inr=n=>"₹"+Number(n).toLocaleString("en-IN");
+const ymd=d=>{const z=new Date(d);return z.getFullYear()+"-"+String(z.getMonth()+1).padStart(2,"0")+"-"+String(z.getDate()).padStart(2,"0")};
+const off=n=>{const d=new Date();d.setDate(d.getDate()+n);return ymd(d)};
+const TODAY=off(0);
+const fmt=s=>new Date(s+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short"});
+
+const MS=TODAY.slice(0,8)+"01";const am=n=>{const d=off(n);return d<MS?MS:d};
+const S={adminId:"admin",view:"dashboard",role:"Admin",dash:1,
+ targets:{calls:60,admissions:20,revenue:500000},
+ users:[{name:"Admin",super:true},{name:"Deepti",view:true,edit:true},{name:"Mohit",view:true,edit:false}],
+ notes:[],
+ leads:[
+  {id:1,name:"Rahul Verma",owner:"Deepti",status:"New",calls:2,added:TODAY,follow:TODAY,revenue:0,demo:null},
+  {id:2,name:"Ananya Singh",owner:"Mohit",status:"New",calls:1,added:TODAY,follow:off(1),revenue:0,demo:null},
+  {id:3,name:"Karan Mehta",owner:"Deepti",status:"Contacted",calls:5,added:off(-3),follow:TODAY,revenue:0,demo:null},
+  {id:4,name:"Pooja Nair",owner:"Mohit",status:"Contacted",calls:4,added:off(-4),follow:TODAY,revenue:0,demo:null},
+  {id:5,name:"Sameer Khan",owner:"Deepti",status:"Contacted",calls:6,added:off(-6),follow:off(2),revenue:0,demo:{date:off(2),attended:null,admission:null,fee:0}},
+  {id:6,name:"Neha Gupta",owner:"Mohit",status:"Contacted",calls:7,added:off(-8),follow:off(3),revenue:0,demo:{date:off(3),attended:null,admission:null,fee:0}},
+  {id:7,name:"Vikas Yadav",owner:"Deepti",status:"Demo done",calls:9,added:off(-10),follow:TODAY,revenue:0,demo:{date:off(-1),attended:null,admission:null,fee:0}},
+  {id:8,name:"Ritu Sharma",owner:"Mohit",status:"Admitted",calls:6,added:off(-15),follow:null,revenue:32000,adm:am(-5),demo:{date:off(-8),attended:true,admission:"Admitted",fee:32000}},
+  {id:9,name:"Arjun Patel",owner:"Deepti",status:"Admitted",calls:7,added:off(-15),follow:null,revenue:28000,adm:am(-6),demo:{date:off(-8),attended:true,admission:"Admitted",fee:28000}},
+  {id:10,name:"Aditi Rao",owner:"Mohit",status:"Admitted",calls:8,added:off(-15),follow:null,revenue:26000,adm:am(-3),demo:{date:off(-8),attended:true,admission:"Admitted",fee:26000}},
+  {id:11,name:"Manish Joshi",owner:"Deepti",status:"Admitted",calls:9,added:off(-15),follow:null,revenue:28000,adm:am(-6),demo:{date:off(-8),attended:true,admission:"Admitted",fee:28000}},
+  {id:12,name:"Sonal Jain",owner:"Mohit",status:"Admitted",calls:10,added:off(-15),follow:null,revenue:24000,adm:am(-4),demo:{date:off(-8),attended:true,admission:"Admitted",fee:24000}},
+  {id:13,name:"Gaurav Bansal",owner:"Deepti",status:"Admitted",calls:11,added:off(-15),follow:null,revenue:30000,adm:am(-5),demo:{date:off(-8),attended:true,admission:"Admitted",fee:30000}},
+  {id:14,name:"Isha Kapoor",owner:"Mohit",status:"Admitted",calls:6,added:off(-15),follow:null,revenue:25000,adm:am(-6),demo:{date:off(-8),attended:true,admission:"Admitted",fee:25000}},
+  {id:15,name:"Tarun Malik",owner:"Deepti",status:"Admitted",calls:7,added:off(-15),follow:null,revenue:27000,adm:am(-4),demo:{date:off(-8),attended:true,admission:"Admitted",fee:27000}},
+  {id:16,name:"Divya Menon",owner:"Mohit",status:"Admitted",calls:8,added:off(-15),follow:null,revenue:29000,adm:am(-6),demo:{date:off(-8),attended:true,admission:"Admitted",fee:29000}},
+  {id:17,name:"Harsh Vardhan",owner:"Deepti",status:"Admitted",calls:9,added:off(-15),follow:null,revenue:26000,adm:am(-5),demo:{date:off(-8),attended:true,admission:"Admitted",fee:26000}},
+  {id:18,name:"Nitin Arora",owner:"Mohit",status:"Admitted",calls:10,added:off(-15),follow:null,revenue:25000,adm:am(-3),demo:{date:off(-8),attended:true,admission:"Admitted",fee:25000}},
+ ],
+ callsToday:38
+};
+const isSuper=()=>S.role==="Admin";
+const me=()=>S.users.find(u=>u.name===S.role);
+const visible=()=>isSuper()?S.leads:(me().view?S.leads.filter(l=>l.owner===S.role):[]);
+const canEdit=l=>isSuper()||(me().edit&&l.owner===S.role);
+
+function toast(t){const e=document.createElement("div");e.className="toast";e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2200)}
+async function copy(t,btn){try{await navigator.clipboard.writeText(t);btn.textContent="Copied"}catch(_){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy");btn.textContent="Copied"}catch(__){btn.textContent="Select and copy"}a.remove()}setTimeout(()=>btn.textContent="Copy message",1500)}
+function countUp(el,to,prefix){const d=900,t0=performance.now();const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;if(reduce){el.textContent=(prefix||"")+Number(to).toLocaleString("en-IN");return}
+ const f=t=>{const p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=(prefix||"")+Math.round(to*e).toLocaleString("en-IN");if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
+
+const metrics=()=>{const L=visible();const calls=L.reduce((a,l)=>a+l.calls,0);
+ return{calls,fresh:L.filter(l=>l.status==="New").length,today:L.filter(l=>l.added===TODAY).length,pending:L.filter(l=>l.follow===TODAY).length,sched:L.filter(l=>l.demo&&l.demo.date>=TODAY&&l.demo.attended===null).length}};
+function tilesHtml(){const m=metrics();const T=[["Total calls",m.calls],["New leads",m.fresh],["Added today",m.today],["Pending today",m.pending],["Scheduled",m.sched]];
+ return'<div class="tiles">'+T.map((t,i)=>`<div class="tile" style="--i:${i}"><b data-count="${t[1]}">0</b><span>${t[0]}</span></div>`).join("")+"</div>"}
+function ring(i,title,val,tgt,fmtFn){const p=Math.min(100,Math.round(val/tgt*100)),C=2*Math.PI*38;
+ return`<div class="card ringcard" style="--i:${i}"><div class="ring"><svg width="92" height="92" viewBox="0 0 92 92"><circle class="bg" cx="46" cy="46" r="38"/><circle class="fg" cx="46" cy="46" r="38" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-off="${C*(1-p/100)}"/></svg><div class="ring pct" style="position:absolute;inset:0;width:auto;height:auto"><span data-count="${p}" data-suffix="%">0</span></div></div><div class="txt"><h3>${title}</h3><div class="big">${fmtFn(val)}</div><div class="note">Target ${fmtFn(tgt)}${" \u00b7 "+p+"%"}</div><div class="bar mbar"><i data-w="${p}"></i></div></div></div>`}
+
+const pillFor=l=>{if(l.status==="Admitted")return'<span class="pill p-ok">Admitted</span>';if(l.demo&&l.demo.attended===false)return'<span class="pill p-bad">Missed demo</span>';if(l.demo&&l.demo.attended===null&&l.demo.date>=TODAY)return'<span class="pill p-sched">Demo '+fmt(l.demo.date)+'</span>';if(l.demo&&l.demo.attended===null)return'<span class="pill p-pend">Confirm demo</span>';if(l.status==="New")return'<span class="pill p-new">New</span>';if(l.follow===TODAY)return'<span class="pill p-pend">Due today</span>';return'<span class="pill p-none">'+esc(l.status)+'</span>'};
+
+function trackerHtml(L,k){
+ const now=new Date(),dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate(),dom=now.getDate(),left=dim-dom+1;
+ const A=L.filter(l=>l.status==="Admitted"&&l.adm&&l.adm>=MS);
+ const done=A.length,T=Math.max(1,Math.round(S.targets.admissions*k)),pend=Math.max(0,T-done),pct=Math.min(100,Math.round(done/T*100));
+ const rev=A.reduce((a,l)=>a+l.revenue,0),RT=Math.max(1,Math.round(S.targets.revenue*k)),rp=Math.max(0,RT-rev),rpct=Math.min(100,Math.round(rev/RT*100));
+ const last=A.map(l=>l.adm).sort().pop();
+ const since=last?Math.round((new Date(TODAY+"T00:00:00")-new Date(last+"T00:00:00"))/864e5):null;
+ const need=pend/left,avg=done?dom/done:null;
+ const month=now.toLocaleDateString("en-IN",{month:"long"});
+ const sinceTxt=since===null?"None yet":since===0?"Today":since+(since===1?" day ago":" days ago");
+ let strip="";for(let d=1;d<=dim;d++){const ds=TODAY.slice(0,8)+String(d).padStart(2,"0");const c=A.filter(l=>l.adm===ds).length;
+  strip+=`<div class="day ${d>dom?"fut":c?"hit":"gap"} ${d===dom?"now":""}" style="--i:${d}" title="${fmt(ds)}: ${c} admission${c===1?"":"s"}"><b>${d}</b><span>${d>dom?"":c||"0"}</span></div>`}
+ return`<div class="track">
+ <div class="box" style="--i:0"><h4>Admissions in ${month}</h4><div class="big"><span data-count="${done}">0</span><small> / ${T}</small></div><div class="bar"><i data-w="${pct}"></i></div><div class="sub">${pct}% done. <b>${pend} pending</b> to hit target.</div></div>
+ <div class="box" style="--i:1"><h4>Revenue collected</h4><div class="big">${inr(rev)}</div><div class="bar"><i data-w="${rpct}"></i></div><div class="sub">${rpct}% of ${inr(RT)}. <b>${inr(rp)} pending</b>.</div></div>
+ <div class="box" style="--i:2"><h4>Last admission</h4><div class="big">${sinceTxt}</div><div class="sub">${since!==null&&since>=3?'<span class="pill p-pend">Gap is growing, close one today</span>':"Gap since last admission"}</div></div>
+ <div class="box" style="--i:3"><h4>Pace needed</h4><div class="big">${need.toFixed(1)}<small> per day</small></div><div class="sub">${left} days left in ${month}. ${avg?"So far: one admission every "+avg.toFixed(1)+" days.":"No admissions yet this month."}</div></div></div>
+ <div class="card" style="margin-bottom:12px"><h3 style="font-size:16px">Admissions per day</h3><p class="note" style="margin:2px 0 0">Red days are days with no admission.</p><div class="days">${strip}</div></div>`}
+
+function viewDashboard(){
+ const L=visible();const calls=isSuper()?S.callsToday:Math.round(S.callsToday*L.length/Math.max(1,S.leads.length));
+ const adm=L.filter(l=>l.status==="Admitted"&&l.adm&&l.adm>=MS).length,rev=L.filter(l=>l.adm&&l.adm>=MS).reduce((a,l)=>a+l.revenue,0);
+ const k=isSuper()?1:Math.max(.2,L.length/S.leads.length);
+ const names=["Clean","Night Ops","Paper","Bold"];
+ return'<div class="picker"><span class="note">Dashboard style</span>'+names.map((n,i)=>`<button data-dash="${i+1}" class="${S.dash===i+1?"on":""}">${i+1}. ${n}</button>`).join("")+"</div>"+
+ `<div class="dash d${S.dash}">`+(isSuper()?"":'<div class="banner">Showing only your own leads and numbers.</div>')+trackerHtml(L,k)+
+ '<div class="rings">'+ring(0,"Calls today",calls,Math.round(S.targets.calls*k),n=>n)+ring(1,"Admissions this month",adm,Math.max(1,Math.round(S.targets.admissions*k)),n=>n)+ring(2,"Revenue this month",rev,Math.round(S.targets.revenue*k),inr)+"</div>"+tilesHtml()+
+ '<div class="card"><h3 style="margin-bottom:8px">Pending follow ups today</h3>'+(L.filter(l=>l.follow===TODAY).map(l=>`<div class="tog"><span>${esc(l.name)} <span class="note">${isSuper()?"with "+esc(l.owner):""}</span></span>${pillFor(l)}</div>`).join("")||'<p class="note">Nothing pending.</p>')+"</div></div>"}
+
+function viewLeads(){
+ const L=visible();
+ return tilesHtml()+(L.length?"":'<div class="banner">You do not have permission to view leads. The super admin can turn this on.</div>')+
+ `<div class="card tablewrap"><table><thead><tr><th>Lead</th>${isSuper()?"<th>Owner</th>":""}<th>Status</th><th class="num">Calls</th><th>Follow up</th><th class="num">Revenue</th><th></th></tr></thead><tbody>`+
+ L.map((l,i)=>`<tr style="--i:${i}"><td><b>${esc(l.name)}</b></td>${isSuper()?`<td>${esc(l.owner)}</td>`:""}<td>${pillFor(l)}</td><td class="num">${l.calls}</td><td>${l.follow?fmt(l.follow):"None"}</td><td class="num">${inr(l.revenue)}</td><td><div class="row"><button class="btn ghost sm" data-edit="${l.id}" ${canEdit(l)?"":"disabled"}>Edit</button><button class="btn sm" data-demo="${l.id}" ${canEdit(l)?"":"disabled"}>Schedule demo</button></div></td></tr>`).join("")+"</tbody></table></div>"+
+ (!isSuper()&&me()&&!me().edit?'<p class="note" style="margin-top:8px">Edit is switched off for you by the super admin.</p>':"")}
+
+function templateFor(l){const d=l.demo.date;const first=l.name.split(" ")[0];return d===TODAY?`Hi ${first}, we have a webinar today. Please join on time.`:`Hi ${first}, your webinar is on ${fmt(d)}. Please join on time.`}
+function viewDemos(){
+ const L=visible().filter(l=>l.demo);
+ if(!L.length)return'<div class="card"><p>No demos yet. Use Schedule demo on the Leads page.</p></div>';
+ return L.sort((a,b)=>a.demo.date<b.demo.date?-1:1).map((l,i)=>{const d=l.demo,past=d.date<=TODAY;
+  return`<div class="card demo" style="--i:${i}"><header><div><h3>${esc(l.name)}</h3><span class="note">${fmt(d.date)}${isSuper()?" with "+esc(l.owner):""}</span></div>${pillFor(l)}</header>
+  <div class="msg">${esc(templateFor(l))}</div>
+  <div class="row"><button class="btn ghost sm" data-copy="${l.id}">Copy message</button></div>
+  ${past&&d.attended===null&&canEdit(l)?`<div class="row"><span class="note">Did ${esc(l.name.split(" ")[0])} attend?</span><button class="btn sm" data-att="${l.id}|1">Attended</button><button class="btn ghost sm" data-att="${l.id}|0">Did not attend</button></div>`:""}
+  ${d.attended===true&&l.status!=="Admitted"&&canEdit(l)?`<div class="row"><select id="adm${l.id}" aria-label="Admission status"><option>Admission pending</option><option>Admitted</option><option>Not interested</option></select><input id="fee${l.id}" type="number" min="0" placeholder="Fee paid in rupees" aria-label="Fee paid"><button class="btn sm" data-conv="${l.id}">Save conversion</button></div>`:""}
+  ${l.status==="Admitted"?`<span class="note">Admitted. Fee paid ${inr(d.fee)}.</span>`:""}</div>`}).join("")}
+
+function viewTeam(){
+ if(!isSuper())return'<div class="card"><p>Only the super admin can manage users and permissions.</p></div>';
+ return`<div class="two"><div class="card"><h3>Admin account</h3><label for="newId">Admin user ID</label><input id="newId" value="${esc(S.adminId)}" autocomplete="off"><div class="row" style="margin-top:12px"><button class="btn" id="saveId">Change user ID</button></div><p class="note" style="margin-top:8px">Current sign in ID: ${esc(S.adminId)}</p></div>
+ <div class="card"><h3>Lead permissions</h3><p class="note">Users see and edit only their own leads, if allowed.</p>${S.users.filter(u=>!u.super).map(u=>`<div class="tog"><b>${esc(u.name)}</b><span class="row"><label class="note" style="margin:0">View</label><input type="checkbox" class="sw" data-perm="${u.name}|view" ${u.view?"checked":""} aria-label="${esc(u.name)} can view"><label class="note" style="margin:0">Edit</label><input type="checkbox" class="sw" data-perm="${u.name}|edit" ${u.edit?"checked":""} aria-label="${esc(u.name)} can edit"></span></div>`).join("")}</div></div>`}
+
+const VIEWS={dashboard:["Dashboard",viewDashboard],leads:["Leads",viewLeads],demos:["Demos",viewDemos],team:["Team",viewTeam]};
+function nav(){ $("#nav").innerHTML='<div class="brand">Lead Desk</div>'+Object.keys(VIEWS).filter(k=>k!=="team"||isSuper()).map(k=>`<button data-v="${k}" class="${S.view===k?"on":""}">${VIEWS[k][0]}</button>`).join("")}
+function render(){
+ if(S.view==="team"&&!isSuper())S.view="dashboard";
+ nav();$("#title").textContent=VIEWS[S.view][0];
+ $("#view").innerHTML='<div class="view">'+VIEWS[S.view][1]()+"</div>";
+ document.querySelectorAll("[data-count]:not([data-suffix])").forEach(e=>countUp(e,+e.dataset.count));
+ document.querySelectorAll("[data-count][data-suffix]").forEach(e=>{const to=+e.dataset.count;const o=e;const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900);o.textContent=Math.round(to*(1-Math.pow(1-p,3)))+"%";if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)});
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{document.querySelectorAll(".ring .fg").forEach(c=>c.style.strokeDashoffset=c.dataset.off);document.querySelectorAll(".bar i").forEach(b=>b.style.width=b.dataset.w+"%")}));
+ const n=S.notes.filter(x=>!x.read).length;$("#dot").textContent=n;$("#dot").classList.toggle("hide",!(n&&isSuper()));
+ $("#bellWrap").classList.toggle("hide",!isSuper());
+}
+function openModal(html){$("#modalHost").innerHTML='<div class="modal" id="mod"><div class="card">'+html+"</div></div>";const m=$("#mod");m.addEventListener("click",e=>{if(e.target===m)closeModal()});const f=m.querySelector("input,select");f&&f.focus()}
+function closeModal(){$("#modalHost").innerHTML=""}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();$("#pop").classList.add("hide")}});
+
+$("#loginForm").addEventListener("submit",e=>{e.preventDefault();$("#login").classList.add("hide");$("#app").classList.remove("hide");render()});
+$("#role").innerHTML=S.users.map(u=>`<option>${u.name}${u.super?"":""}</option>`).join("");
+$("#role").addEventListener("change",e=>{S.role=e.target.value;render()});
+$("#nav").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(b){S.view=b.dataset.v;render()}});
+$("#bell").addEventListener("click",()=>{const p=$("#pop");p.innerHTML=S.notes.length?S.notes.slice().reverse().map(n=>`<div class="item">${esc(n.text)}</div>`).join(""):'<div class="item note">No notifications yet.</div>';p.classList.toggle("hide");S.notes.forEach(n=>n.read=true);$("#dot").classList.add("hide")});
+
+$("#view").addEventListener("click",e=>{
+ const t=e.target.closest("button");if(!t)return;
+ if(t.dataset.dash){S.dash=+t.dataset.dash;render();return}
+ if(t.dataset.demo){const l=S.leads.find(x=>x.id==t.dataset.demo);
+  openModal(`<h3>Schedule demo</h3><p class="note">${esc(l.name)}</p><label for="dd">Demo date</label><input id="dd" type="date" value="${TODAY}" min="${TODAY}"><div class="row" style="margin-top:16px"><button class="btn" id="saveDemo" data-id="${l.id}">Schedule</button><button class="btn ghost" id="cancel">Cancel</button></div>`)}
+ if(t.dataset.edit){const l=S.leads.find(x=>x.id==t.dataset.edit);
+  openModal(`<h3>Edit lead</h3><p class="note">${esc(l.name)}</p><label for="ec">Total calls</label><input id="ec" type="number" min="0" value="${l.calls}"><label for="er">Revenue in rupees</label><input id="er" type="number" min="0" value="${l.revenue}"><div class="row" style="margin-top:16px"><button class="btn" id="saveEdit" data-id="${l.id}">Save</button><button class="btn ghost" id="cancel">Cancel</button></div>`)}
+ if(t.dataset.copy){const l=S.leads.find(x=>x.id==t.dataset.copy);copy(templateFor(l),t)}
+ if(t.dataset.att){const[id,v]=t.dataset.att.split("|");const l=S.leads.find(x=>x.id==id);l.demo.attended=v==="1";if(v==="1")l.status="Demo done";else l.status="Contacted";toast(v==="1"?"Marked as attended":"Marked as not attended");render()}
+ if(t.dataset.conv){const id=t.dataset.conv;const l=S.leads.find(x=>x.id==id);const a=$("#adm"+id).value,fee=+($("#fee"+id).value||0);
+  l.demo.admission=a;l.demo.fee=fee;if(a==="Admitted"){l.status="Admitted";l.revenue=fee;l.follow=null;l.adm=TODAY}toast("Conversion saved");render()}
+ if(t.id==="saveId"){const v=$("#newId").value.trim();if(!v){toast("Enter a user ID");return}S.adminId=v;$("#uid").value=v;toast("Admin user ID changed");render()}
+});
+$("#view").addEventListener("change",e=>{const c=e.target.closest("[data-perm]");if(c){const[n,k]=c.dataset.perm.split("|");S.users.find(u=>u.name===n)[k]=c.checked;toast("Permission updated")}});
+$("#modalHost").addEventListener("click",e=>{
+ const t=e.target.closest("button");if(!t)return;
+ if(t.id==="cancel")closeModal();
+ if(t.id==="saveDemo"){const l=S.leads.find(x=>x.id==t.dataset.id);const d=$("#dd").value;if(!d)return;
+  l.demo={date:d,attended:null,admission:null,fee:0};l.follow=d;
+  S.notes.push({text:`${S.role} scheduled a demo for ${l.name} on ${fmt(d)}.`,read:false});
+  closeModal();toast("Demo scheduled. Super admin notified.");S.view="demos";render();
+  const b=$("#bell");b.parentElement.classList.remove("ring");void b.offsetWidth;b.parentElement.classList.add("ring")}
+ if(t.id==="saveEdit"){const l=S.leads.find(x=>x.id==t.dataset.id);l.calls=+$("#ec").value||0;l.revenue=+$("#er").value||0;closeModal();toast("Lead updated");render()}
+});
+})();
+</script>
+
+</body></html>

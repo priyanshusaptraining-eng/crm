@@ -1,0 +1,54 @@
+{
+  "name": "CorporateAcademy CRM",
+  "short_name": "Corporate CRM",
+  "description": "Enterprise Sales CRM, DPR Analytics, 1-Tap Dialer & WhatsApp Outreach for CorporateAcademy",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#0B1020",
+  "theme_color": "#0B1020",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Leads",
+      "short_name": "Leads",
+      "url": "/#leads",
+      "description": "View and call prospective candidates"
+    },
+    {
+      "name": "Daily DPR",
+      "short_name": "DPR",
+      "url": "/#dpr",
+      "description": "Upload and verify daily performance report"
+    }
+  ]
+}
